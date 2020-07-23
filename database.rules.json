@@ -1,7 +1,8 @@
 {
-  /* Visit https://firebase.google.com/docs/database/security to learn more about security rules. */
+  /* Visit https://firebase.google.com/docs/database/security to learn more about security rules.
+  Rules used: Force Auth for read and write to the DB*/
   "rules": {
-    ".read": false,
-    ".write": false
+    ".read": "auth != null",
+    ".write": "auth != null"
   }
 }

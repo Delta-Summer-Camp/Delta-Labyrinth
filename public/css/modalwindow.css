@@ -1,0 +1,25 @@
+.modal_block {
+    width: 100%;
+    height: 100%;
+    position: fixed;
+    top: 0;
+    left: 0;
+    background-color: rgba(0, 0, 0, 0.5);
+    z-index: 999999;
+}
+
+.modal_block form {
+    max-width: 840px;
+    background-color: floralwhite;
+    border: darkblue 1px solid;
+    border-radius: 20px;
+    margin: 150px auto;
+    padding: 2.5em;
+}
+
+.modal_input input {
+    width: 15em;
+    height: 1.5em;
+    font-size: 1em;
+    padding-left: 1em;
+}

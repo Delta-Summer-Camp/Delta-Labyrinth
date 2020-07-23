@@ -5,11 +5,6 @@
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <title>Index</title>
 
-  <!-- update the version number as needed (we do not need this so far)
-  <script defer src="/__/firebase/7.16.1/firebase-app.js"></script>
-  <script defer src="/__/firebase/7.16.1/firebase-auth.js"></script>
-  <script defer src="/__/firebase/7.16.1/firebase-database.js"></script>
-  <script defer src="/__/firebase/init.js"></script>-->
   <link href="css/index.css" rel="stylesheet">
 <body onload="gamestart()">
 <p class="cordstext" id="coords"></p>
@@ -22,6 +17,29 @@
     </div>
   </div>
 </div>
+
+<div class="modal_block" id="modal_block" style="display: none">
+  <form action="javascript:void(0);" id='loginform'>
+    <p id='type'>Login!</p>
+    <label for="email">Email:</label>
+    <input id="email" name="email" type="text"><br><br>
+    <label for="password">Password:</label>
+    <input id="password" name="password" type="password"><br><br>
+    <label for="displayname" id="displaynametext" style="display: none">Display Name: </label>
+    <input id="displayname" name="displayname" style="display: none" type="text"><br>
+    <button class="tootheraction" id="tootheraction" onclick="switchtoreg()" value="otheraction">Register</button>
+    <input id='actionsubmit' onclick="login()" type="submit" value="Submit">
+  </form>
+</div>
+
+<!-- update the version number as needed -->
+<script src="/__/firebase/7.17.0/firebase-app.js"></script>
+<script src="/__/firebase/7.17.0/firebase-analytics.js"></script>
+<script src="/__/firebase/7.17.0/firebase-auth.js"></script>
+<script src="/__/firebase/7.17.0/firebase-database.js"></script>
+<!--<script defer src="/__/firebase/init.js"></script>-->
 <script src="js/index.js"></script>
+<script src="js/firebase.js"></script>
+
 </body>
 </html>
