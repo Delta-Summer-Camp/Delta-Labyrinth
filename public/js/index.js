@@ -2,11 +2,12 @@ var player = document.getElementById("player")
 var colidables = document.getElementsByClassName("colidable")
 
 function updateplayer(way, newCords) {
+    var prev
     if (way === "top") {
-        var prev = player.style.top
+        prev = player.style.top
         player.style.top = newCords
     } else {
-        var prev = player.style.left
+        prev = player.style.left
         player.style.left = newCords
     }
     var submitcoords = true
@@ -35,10 +36,8 @@ function colides(otherobject) {
     const mybottom = parseInt(player.style.top) + parseInt(player.style.height) //bottom of the player(y)
     const myleft = parseInt(player.style.left) //left of the player (x)
     const myright = parseInt(player.style.left) + parseInt(player.style.width) //right of the player (x)
-    if ((mybottom > othertop && mytop < otherbottom) && (myright > otherleft && myleft < otherright)) {
-        return true
-    }
-    return false
+    return mybottom > othertop && mytop < otherbottom && myright > otherleft && myleft < otherright;
+
 }
 
 function gamestart() {
@@ -50,29 +49,30 @@ function updateloc() {
 }
 
 document.addEventListener('keydown', function (event) {
+    var sendcoords
     if (event.code === 'KeyW') {
-        var sendcoords = updateplayer("top", parseInt(player.style.top) - 10 + 'px')
+        sendcoords = updateplayer("top", parseInt(player.style.top) - 10 + 'px')
         if (sendcoords) {
             updateloc()
         }
     }
     if (event.code === 'KeyA') {
         //player.style.left = parseInt(player.style.left) - 10 + 'px'
-        var sendcoords = updateplayer("left", parseInt(player.style.left) - 10 + 'px')
+        sendcoords = updateplayer("left", parseInt(player.style.left) - 10 + 'px')
         if (sendcoords) {
             updateloc()
         }
     }
     if (event.code === 'KeyS') {
         //player.style.top = parseInt(player.style.top) + 10 + 'px'
-        var sendcoords = updateplayer("top", parseInt(player.style.top) + 10 + 'px')
+        sendcoords = updateplayer("top", parseInt(player.style.top) + 10 + 'px')
         if (sendcoords) {
             updateloc()
         }
     }
     if (event.code === 'KeyD') {
         //player.style.left = parseInt(player.style.left) + 10 + 'px'
-        var sendcoords = updateplayer("left", parseInt(player.style.left) + 10 + 'px')
+        sendcoords = updateplayer("left", parseInt(player.style.left) + 10 + 'px')
         if (sendcoords) {
             updateloc()
         }
