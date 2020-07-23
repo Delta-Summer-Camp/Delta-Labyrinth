@@ -1,0 +1,19 @@
+.player {
+    position: relative;
+    background-color: black;
+}
+
+.gamearea {
+    width: 500px;
+    height: 500px;
+    background-color: white;
+    border: black 3px solid;
+}
+
+body {
+    background-color: gray;
+}
+
+.cordstext {
+    font-size: 30px;
+}
