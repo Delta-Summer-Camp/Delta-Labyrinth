@@ -1,6 +1,7 @@
 var player = document.getElementById("player")
 var colidables = document.getElementsByClassName("colidable")
 
+
 function updateplayer(way, newCords) {
     var prev
     if (way === "top") {
@@ -10,7 +11,7 @@ function updateplayer(way, newCords) {
         prev = player.style.left
         player.style.left = newCords
     }
-    var submitcoords = true
+
     for (let i = 0; i < colidables.length; i++) {
         if (colides(colidables[i])) {
             if (way === "top") {
@@ -18,10 +19,10 @@ function updateplayer(way, newCords) {
             } else {
                 player.style.left = prev
             }
-            submitcoords = false
+            return false
         }
     }
-    return submitcoords
+    return true
 }
 
 function colides(otherobject) {
@@ -40,12 +41,24 @@ function colides(otherobject) {
 
 }
 
-function gamestart() {
+/*function gamestart() {
     document.getElementById("coords").innerText = player.style.top + ", " + player.style.left
-}
+    databasereference.set({
+        playerx: parseInt(player.style.top),
+        playery: parseInt(player.style.left),
+        playernick: globaluser.displayName
+    });
+}*/
 
-function updateloc() {
+function updateloc() { // also serves as the page load
     document.getElementById("coords").innerText = player.style.top + ", " + player.style.left
+    // TODO send to firebase here
+    console.log(globaluser.displayName + ": x: " + player.style.top + ", y: " + player.style.left)
+    database.ref("players/" + globaluser.uid).set({
+        playerx: parseInt(player.style.top),
+        playery: parseInt(player.style.left),
+        playernick: globaluser.displayName
+    });
 }
 
 document.addEventListener('keydown', function (event) {
@@ -113,7 +126,7 @@ function login() {
 function register() {
     const email = document.getElementById("email").value
     const password = document.getElementById("password").value
-    const displayname = document.getElementById("displaynametext").value
+    const displayname = document.getElementById("displayname").value
 
     //alert("email: " + email + ", password: " + password)
     firebase.auth().createUserWithEmailAndPassword(email, password)

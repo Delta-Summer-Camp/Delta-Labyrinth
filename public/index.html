@@ -6,18 +6,21 @@
   <title>Index</title>
 
   <link href="css/index.css" rel="stylesheet">
-<body onload="gamestart()">
+<body onload="updateloc()">
 <p class="cordstext" id="coords"></p>
 <div class="gamearea" id="gamearea">
-  <div class="player" id="player" style="top: 100px; left: 70px; width: 50px; height: 50px;">
-  </div>
+  <div class="player" id="player" style="top: 100px; left: 70px; width: 50px; height: 50px;"></div>
+  <div class="otherplayers" id="otherplayers"></div>
   <div id="collidableobjects">
     <div class="colidable" id="colidableobject"
          style="position: relative; background-color: black; top: 200px; left: 150px; width: 100px; height: 50px;">
     </div>
   </div>
 </div>
+<br>
+<div id="othercoords">
 
+</div>
 <div class="modal_block" id="modal_block" style="display: none">
   <form action="javascript:void(0);" id='loginform'>
     <p id='type'>Login!</p>
@@ -32,14 +35,14 @@
   </form>
 </div>
 
-<!-- update the version number as needed -->
-<script src="/__/firebase/7.17.0/firebase-app.js"></script>
-<script src="/__/firebase/7.17.0/firebase-analytics.js"></script>
-<script src="/__/firebase/7.17.0/firebase-auth.js"></script>
-<script src="/__/firebase/7.17.0/firebase-database.js"></script>
-<!--<script defer src="/__/firebase/init.js"></script>-->
-<script src="js/index.js"></script>
+<!-- update the version number as needed, moved to cdn to make autocomplete work properly-->
+<script src="https://www.gstatic.com/firebasejs/7.17.0/firebase-app.js"></script>
+<script src="https://www.gstatic.com/firebasejs/7.17.0/firebase-analytics.js"></script>
+<script src="https://www.gstatic.com/firebasejs/7.17.0/firebase-auth.js"></script>
+<script src="https://www.gstatic.com/firebasejs/7.17.0/firebase-database.js"></script>
+<!--<script defer src="https://www.gstatic.com/firebasejs/init.js"></script>-->
 <script src="js/firebase.js"></script>
+<script src="js/index.js"></script>
 
 </body>
 </html>
