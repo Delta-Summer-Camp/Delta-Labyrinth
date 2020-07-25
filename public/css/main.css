@@ -1,8 +1,14 @@
 .player {
     position: relative;
     background-color: black;
+    z-index: 10;
 }
 
+.others {
+    position: relative;
+    /*background-color: black;*/
+    z-index: 5;
+}
 
 .gamearea {
     width: 500px;
