@@ -61,6 +61,7 @@ function preGameFieldInstatiation(gamecode) {
     document.getElementById("playerlist").style.display = "block"
     isGameActive = true
 
+    //other player update
     database.ref("games/" + gamecode + "/players").on('value', (snapshot) => {
         console.log(snapshot.val())
         //clear div
@@ -74,13 +75,16 @@ function preGameFieldInstatiation(gamecode) {
         var gamearea = document.getElementById("gamearea")//will not fix TODO ERROR
         var playerlist = document.getElementById("playerlist")
         playerlist.innerHTML = ""
+
         snapshot.forEach(function (childSnapshot) {
             if (childSnapshot.key !== globaluser.uid) {
-                gamearea.innerHTML += "<div class=\"others\" id='" + childSnapshot.key + "' style=\"background-color: black; top: " + childSnapshot.val().playerx + "px; left: " + childSnapshot.val().playery + "px; width: 50px; height: 50px;\"></div>"
-                //"<p style=\"position: relative; top: " + childSnapshot.val().playerx + "px; left: " + childSnapshot.val().playery + "px;\">" + childSnapshot.val().playernick + "</p>" +
+                if (childSnapshot.val().isOnline) {
+                    gamearea.innerHTML += "<div class=\"others\" id='" + childSnapshot.key + "' style=\"background-color: black; top: " + childSnapshot.val().playerx + "px; left: " + childSnapshot.val().playery + "px; width: 50px; height: 50px;\"></div>"
+                    //"<p style=\"position: relative; top: " + childSnapshot.val().playerx + "px; left: " + childSnapshot.val().playery + "px;\">" + childSnapshot.val().playernick + "</p>" +
 
-                //otherplayerdiv.innerHTML += "<p>" + childSnapshot.val().displayname + ": x:" + childSnapshot.val().playerx + ", y:" + childSnapshot.val().playery + "</p>"
-                console.log(childSnapshot.val().playernick + ": x: " + parseInt(childSnapshot.val().playerx) + ", y: " + childSnapshot.val().playery)
+                    //otherplayerdiv.innerHTML += "<p>" + childSnapshot.val().displayname + ": x:" + childSnapshot.val().playerx + ", y:" + childSnapshot.val().playery + "</p>"
+                    console.log(childSnapshot.val().playernick + ": x: " + parseInt(childSnapshot.val().playerx) + ", y: " + childSnapshot.val().playery)
+                }
             }
             playerlist.innerHTML += "<p>" + childSnapshot.val().playernick + ": x: " + childSnapshot.val().playerx + ", y: " + childSnapshot.val().playery + "</p>"
         });
@@ -88,4 +92,7 @@ function preGameFieldInstatiation(gamecode) {
     }, (error) => {
         console.error(error);
     });
+
+    //if the player disconnects
+    database.ref("games/" + gamecode + "/players/" + globaluser.uid + "/isOnline").onDisconnect().set(false);
 }

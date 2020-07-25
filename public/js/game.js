@@ -61,6 +61,7 @@ function updateloc() { // also serves as the page load
     // TODO send to firebase here
     console.log(globaluser.displayName + ": x: " + player.style.top + ", y: " + player.style.left)
     database.ref("games/" + sessionStorage.getItem("currentgame") + "/players/" + globaluser.uid).set({
+        isOnline: true,
         playerx: parseInt(player.style.top),
         playery: parseInt(player.style.left),
         playernick: globaluser.displayName
