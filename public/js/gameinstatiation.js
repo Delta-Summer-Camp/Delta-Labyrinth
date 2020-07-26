@@ -98,8 +98,8 @@ function preGameFieldInstatiation(gamecode, map) {
                     newPlayer.style.backgroundColor = "black"
                     newPlayer.style.top = childSnapshot.val().playerx + 50 + "px"
                     newPlayer.style.left = childSnapshot.val().playery + 50 + "px"
-                    newPlayer.style.width = "50px"
-                    newPlayer.style.height = "50px"
+                    newPlayer.style.width = "25px"
+                    newPlayer.style.height = "25px"
 
                     //otherplayerdiv.innerHTML += "<p>" + childSnapshot.val().displayname + ": x:" + childSnapshot.val().playerx + ", y:" + childSnapshot.val().playery + "</p>"
                     console.log(childSnapshot.val().playernick + ": x: " + parseInt(childSnapshot.val().playerx) + ", y: " + childSnapshot.val().playery)
