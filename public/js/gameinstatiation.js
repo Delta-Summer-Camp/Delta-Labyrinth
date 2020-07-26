@@ -105,7 +105,7 @@ function preGameFieldInstatiation(gamecode) {
     }, (error) => {
         console.error(error);
     });
-
+    startlocalGame()
     //if the player disconnects
     database.ref("games/" + gamecode + "/players/" + globaluser.uid + "/isOnline").onDisconnect().set(false);
 }

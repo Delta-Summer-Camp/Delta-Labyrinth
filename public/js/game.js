@@ -68,6 +68,28 @@ function updateloc() { // also serves as the page load
     });
 }
 
+function startlocalGame() {
+    var field = []
+    for (let i = 0; i < 10; i++) {//for each row
+        field.push([])
+        for (let j = 0; j < 20; j++) {//for each block
+            field[i].push({"contains": Math.random() > 0.5, "rwall": Math.random() > 0.5, "bwall": Math.random() > 0.5})
+        }
+    }
+    console.log(field)
+    var player = document.getElementById("player")
+    document.getElementById("coords").innerText = (parseInt(player.style.top)) + ", " + (parseInt(player.style.left)) // true location
+    // TODO send to firebase here
+    console.log(globaluser.displayName + ": x: " + player.style.top + ", y: " + player.style.left)
+    database.ref("games/" + sessionStorage.getItem("currentgame") + "/players/" + globaluser.uid).set({
+        isOnline: true,
+        playerx: parseInt(player.style.top),
+        playery: parseInt(player.style.left),
+        playernick: globaluser.displayName
+    });
+    drawmap(field)
+}
+
 //add 50 to all
 document.addEventListener('keydown', function (event) {
     if (isGameActive) {
@@ -102,3 +124,49 @@ document.addEventListener('keydown', function (event) {
         }
     }
 });
+
+function drawmap(maparray) {
+    var currentwritex = 1
+    var currentwritey = 1
+    const blocksize = 50
+    maparray.forEach((item, index) => {
+        item.forEach((item, index) => {
+            var gamearea = document.getElementById("gamearea")
+            if (item["contains"]) {
+                if (item["rwall"]) {
+                    //right wall
+                    //each block is 50
+                    var newCollidable = document.createElement("div");
+                    gamearea.append(newCollidable)
+                    // example   <!--<div class="colidable" id="colidableobject"
+                    //        style="position: fixed; background-color: black; top: 250px; left: 200px; width: 100px; height: 50px;">-->
+                    newCollidable.className = "colidable"
+                    newCollidable.style.position = "fixed"
+                    newCollidable.style.backgroundColor = "black"
+                    newCollidable.style.top = currentwritey * blocksize + "px"
+                    newCollidable.style.left = ((currentwritex * blocksize) + blocksize / 2) + "px"
+                    newCollidable.style.width = (blocksize / 2) + "px"
+                    newCollidable.style.height = blocksize + "px"
+                    currentwritex += 1
+                } else if (item["bwall"]) {
+                    //bottom wall
+                    //each block is 50
+                    var newCollidable = document.createElement("div");
+                    gamearea.append(newCollidable)
+                    // example   <!--<div class="colidable" id="colidableobject"
+                    //        style="position: fixed; background-color: black; top: 250px; left: 200px; width: 100px; height: 50px;">-->
+                    newCollidable.className = "colidable"
+                    newCollidable.style.position = "fixed"
+                    newCollidable.style.backgroundColor = "black"
+                    newCollidable.style.top = ((currentwritey * blocksize) + blocksize / 2) + "px"
+                    newCollidable.style.left = currentwritex * blocksize + "px"
+                    newCollidable.style.width = blocksize + "px"
+                    newCollidable.style.height = (blocksize / 2) + "px"
+                    currentwritex += 1
+                }
+            }
+        })
+        currentwritex = 1
+        currentwritey += 1 // * 50 (when used with block size
+    })
+}
