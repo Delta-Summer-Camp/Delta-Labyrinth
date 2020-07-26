@@ -79,14 +79,27 @@ function preGameFieldInstatiation(gamecode) {
         snapshot.forEach(function (childSnapshot) {
             if (childSnapshot.key !== globaluser.uid) {
                 if (childSnapshot.val().isOnline) {
-                    gamearea.innerHTML += "<div class=\"others\" id='" + childSnapshot.key + "' style=\"background-color: black; top: " + childSnapshot.val().playerx + "px; left: " + childSnapshot.val().playery + "px; width: 50px; height: 50px;\"></div>"
-                    //"<p style=\"position: relative; top: " + childSnapshot.val().playerx + "px; left: " + childSnapshot.val().playery + "px;\">" + childSnapshot.val().playernick + "</p>" +
+                    //gamearea.innerHTML += "<div class=\"others\" id='" + childSnapshot.key + "' style=\"background-color: black; top: " + childSnapshot.val().playerx + "px; left: " + childSnapshot.val().playery + "px; width: 50px; height: 50px;\"></div>"
+                    //"<p style=\"position: fixed; top: " + childSnapshot.val().playerx + "px; left: " + childSnapshot.val().playery + "px;\">" + childSnapshot.val().playernick + "</p>" +
+                    var newPlayer = document.createElement("div");
+                    gamearea.append(newPlayer)
+                    newPlayer.id = childSnapshot.key
+                    newPlayer.className = "others"
+                    newPlayer.style.position = "fixed"
+                    newPlayer.style.backgroundColor = "black"
+                    newPlayer.style.top = childSnapshot.val().playerx + 50 + "px"
+                    newPlayer.style.left = childSnapshot.val().playery + 50 + "px"
+                    newPlayer.style.width = "50px"
+                    newPlayer.style.height = "50px"
 
                     //otherplayerdiv.innerHTML += "<p>" + childSnapshot.val().displayname + ": x:" + childSnapshot.val().playerx + ", y:" + childSnapshot.val().playery + "</p>"
                     console.log(childSnapshot.val().playernick + ": x: " + parseInt(childSnapshot.val().playerx) + ", y: " + childSnapshot.val().playery)
                 }
             }
-            playerlist.innerHTML += "<p>" + childSnapshot.val().playernick + ": x: " + childSnapshot.val().playerx + ", y: " + childSnapshot.val().playery + "</p>"
+            //playerlist.innerHTML += "<p>" + childSnapshot.val().playernick + ": x: " + childSnapshot.val().playerx + ", y: " + childSnapshot.val().playery + "</p>"
+            playertext = document.createElement("p");
+            playertext.innerText = childSnapshot.val().playernick + ": x: " + (childSnapshot.val().playerx) + ", y: " + (childSnapshot.val().playery) // true location
+            playerlist.append(playertext)
         });
         //add the ondisconnect class TODO
     }, (error) => {

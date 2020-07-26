@@ -1,11 +1,11 @@
 .player {
-    position: relative;
+    position: absolute;
     background-color: black;
     z-index: 10;
 }
 
 .others {
-    position: relative;
+    position: absolute;
     /*background-color: black;*/
     z-index: 5;
 }
@@ -21,6 +21,9 @@
     height: 500px;
     background-color: white;
     border: black 3px solid;
+    position: fixed;
+    top: 50px;
+    left: 50px;
 }
 
 body {

@@ -32,7 +32,7 @@ function updateplayer(way, newCords) {
 function colides(otherobject) {
     var player = document.getElementById("player")
     // Static Object
-    const othertop = parseInt(otherobject.style.top) + 50//top of the object (y)
+    const othertop = parseInt(otherobject.style.top)// + 50//top of the object (y)
     const otherbottom = parseInt(otherobject.style.top) + parseInt(otherobject.style.height) + 50//bottom of the object(y)
     const otherleft = parseInt(otherobject.style.left)//left of the object (x)
     const otherright = parseInt(otherobject.style.left) + parseInt(otherobject.style.width)//right of the object (x)
@@ -57,7 +57,7 @@ function colides(otherobject) {
 
 function updateloc() { // also serves as the page load
     var player = document.getElementById("player")
-    document.getElementById("coords").innerText = player.style.top + ", " + player.style.left
+    document.getElementById("coords").innerText = (parseInt(player.style.top)) + ", " + (parseInt(player.style.left)) // true location
     // TODO send to firebase here
     console.log(globaluser.displayName + ": x: " + player.style.top + ", y: " + player.style.left)
     database.ref("games/" + sessionStorage.getItem("currentgame") + "/players/" + globaluser.uid).set({
@@ -68,6 +68,7 @@ function updateloc() { // also serves as the page load
     });
 }
 
+//add 50 to all
 document.addEventListener('keydown', function (event) {
     if (isGameActive) {
         var player = document.getElementById("player")
