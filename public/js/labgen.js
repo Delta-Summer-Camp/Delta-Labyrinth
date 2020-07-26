@@ -30,6 +30,8 @@ const labyrinth = [];
 function genRow() {
     let row = [];
     for (let M = 0; M < SIZE; M++) {
+        cell.bWall = Math.random() > 0.5;
+        cell.rWall = Math.random() > 0.5;
         row.push(cell);
     }
 
