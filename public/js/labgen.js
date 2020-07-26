@@ -19,19 +19,23 @@
 const SIZE = 50; // size of the Labyrinth
 
 // cell prototype
+/*
 let cell = {
     rWall: false, // the right wall
     bWall: false, // the bottom wall
     value: 0 // future
-}
+*/
 
 const labyrinth = [];
 
 function genRow() {
     let row = [];
     for (let M = 0; M < SIZE; M++) {
-        cell.bWall = Math.random() > 0.5;
-        cell.rWall = Math.random() > 0.5;
+        let cell = {
+            rWall: Math.random() < 0.5, // the right wall
+            bWall: Math.random() < 0.5, // the bottom wall
+            value: 0 // future
+        }
         row.push(cell);
     }
 
