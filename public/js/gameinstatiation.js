@@ -10,7 +10,7 @@ function joingame() {
                 if (gamecode === childSnapshot.key) {
                     alert("game has been found")
                     var gamelink = database.ref("games/" + gamecode)//duno if we need this
-                    preGameFieldInstatiation(gamecode)
+                    preGameFieldInstatiation(gamecode, childSnapshot.ref().gamemap)
                     //return true
                 }
                 //alert("Game Not found, double check your code")
@@ -27,7 +27,7 @@ function joingame() {
                     alert("game has been found")
                     var gamelink = database.ref("games/" + gamecode)
                     sessionStorage.setItem("currentgame", gamecode)//dont know if we need this
-                    preGameFieldInstatiation(gamecode)
+                    preGameFieldInstatiation(gamecode, childSnapshot.val().gamemap)
                     //return true
                 }
                 //alert("Game Not found, double check your code")
@@ -40,19 +40,28 @@ function joingame() {
 function creategame() {
     var gamekey = Math.random().toString(36).substring(2, 15)
     var gamelink = database.ref("games/" + gamekey)
+    var field = [] // TODO proper Map generation here
+    //we have to generate it from scratch and push it to FDB
+    for (let i = 0; i < 10; i++) {//for each row
+        field.push([])
+        for (let j = 0; j < 20; j++) {//for each block
+            field[i].push({"contains": Math.random() > 0.5, "rwall": Math.random() > 0.5, "bwall": Math.random() > 0.5})
+        }
+    }
+    console.log(field)
     gamelink.set({
         //payload
         owner: globaluser.uid,
-        gamemap: null, // pull gamelib here
+        gamemap: field, // pull gamelib here DONE
         players: null
     })
     alert("Game generated, the code is : #" + gamekey)
     sessionStorage.setItem("currentgame", gamekey)//dont know if we need this
     //game has been generated at this point
-    preGameFieldInstatiation(gamekey)
+    preGameFieldInstatiation(gamekey, field)
 }
 
-function preGameFieldInstatiation(gamecode) {
+function preGameFieldInstatiation(gamecode, map) {
     sessionStorage.setItem("currentgame", gamecode)//dont know if we need this
     //game has been generated at this point
     document.getElementById("welcome").style.display = "none"
@@ -105,7 +114,7 @@ function preGameFieldInstatiation(gamecode) {
     }, (error) => {
         console.error(error);
     });
-    startlocalGame()
+    startlocalGame(map)//pass field generator object here TODO
     //if the player disconnects
     database.ref("games/" + gamecode + "/players/" + globaluser.uid + "/isOnline").onDisconnect().set(false);
 }

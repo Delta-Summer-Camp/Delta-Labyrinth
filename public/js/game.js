@@ -68,15 +68,7 @@ function updateloc() { // also serves as the page load
     });
 }
 
-function startlocalGame() {
-    var field = []
-    for (let i = 0; i < 10; i++) {//for each row
-        field.push([])
-        for (let j = 0; j < 20; j++) {//for each block
-            field[i].push({"contains": Math.random() > 0.5, "rwall": Math.random() > 0.5, "bwall": Math.random() > 0.5})
-        }
-    }
-    console.log(field)
+function startlocalGame(field) {
     var player = document.getElementById("player")
     document.getElementById("coords").innerText = (parseInt(player.style.top)) + ", " + (parseInt(player.style.left)) // true location
     // TODO send to firebase here
