@@ -162,3 +162,16 @@ function drawmap(maparray) {
         currentwritey += 1 // * 50 (when used with block size
     })
 }
+
+function sendcommand(commandtype, commandcontent) {
+    const gamecode = sessionStorage.getItem("currentgame")
+    database.ref("games/" + gamecode + "/commands").set({
+        uid: globaluser.uid,
+        command: commandtype,
+        content: commandcontent
+    })
+}
+
+function kickplayer(playernick) {
+    sendcommand("kick", playernick)
+}

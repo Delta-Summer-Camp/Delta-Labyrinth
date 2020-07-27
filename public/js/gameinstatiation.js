@@ -1,5 +1,5 @@
 var isGameActive
-
+var isHost
 function joingame() {
     if (sessionStorage.getItem("currentgame")) {
         var gamecode = sessionStorage.getItem("currentgame")
@@ -55,6 +55,7 @@ function creategame() {
         gamemap: field, // pull gamelib here DONE
         players: null
     })
+    isHost = true
     alert("Game generated, the code is : #" + gamekey)
     sessionStorage.setItem("currentgame", gamekey)//dont know if we need this
     //game has been generated at this point
@@ -109,6 +110,15 @@ function preGameFieldInstatiation(gamecode, map) {
             playertext = document.createElement("p");
             playertext.innerText = childSnapshot.val().playernick + ": x: " + (childSnapshot.val().playerx) + ", y: " + (childSnapshot.val().playery) // true location
             playerlist.append(playertext)
+
+            if (isHost) {
+                if (childSnapshot.val().playernick !== globaluser.displayName) {
+                    playerkick = document.createElement("button")
+                    playerkick.innerText = "Kick"
+                    playerkick.setAttribute('onclick', 'kickplayer(' + childSnapshot.val().playernick + ')')
+                    playerlist.append(playerkick)
+                }
+            }
         });
         //add the ondisconnect class TODO
     }, (error) => {
@@ -117,4 +127,19 @@ function preGameFieldInstatiation(gamecode, map) {
     startlocalGame(map)//pass field generator object here TODO
     //if the player disconnects
     database.ref("games/" + gamecode + "/players/" + globaluser.uid + "/isOnline").onDisconnect().set(false);
+    database.ref("games/" + gamecode + "/commands").on('value', (snapshot) => {
+        // TODO Interpret commands
+        commands = []
+        commandcontents = []
+        snapshot.forEach(function (element) {
+            commands.push(element.val().command)
+            commandcontents.push(element.val().content)
+        })
+        if (commands[commands.length - 1] === "kick") {
+            if (commandcontents[commandcontents.length - 1] === globaluser.displayName) {
+                alert("You have been kicked from the game by the host")
+                window.close() // TODO change to proper kick
+            }
+        }
+    })
 }
