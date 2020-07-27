@@ -10,7 +10,7 @@ function joingame() {
                 if (gamecode === childSnapshot.key) {
                     alert("game has been found")
                     var gamelink = database.ref("games/" + gamecode)//duno if we need this
-                    preGameFieldInstatiation(gamecode, childSnapshot.ref().gamemap)
+                    preGameFieldInstatiation(gamecode, childSnapshot.val().gamemap) //
                     //return true
                 }
                 //alert("Game Not found, double check your code")
@@ -129,16 +129,29 @@ function preGameFieldInstatiation(gamecode, map) {
     database.ref("games/" + gamecode + "/players/" + globaluser.uid + "/isOnline").onDisconnect().set(false);
     database.ref("games/" + gamecode + "/commands").on('value', (snapshot) => {
         // TODO Interpret commands
-        commands = []
-        commandcontents = []
+        var commands = []
+        var commandcontents = []
         snapshot.forEach(function (element) {
             commands.push(element.val().command)
             commandcontents.push(element.val().content)
+            //console.log(element.val())
+            //console.log(element.val())
         })
         if (commands[commands.length - 1] === "kick") {
             if (commandcontents[commandcontents.length - 1] === globaluser.displayName) {
                 alert("You have been kicked from the game by the host")
                 window.close() // TODO change to proper kick
+            }
+        }
+
+        if (commands[commands.length - 1] === "found") {
+            //if (commandcontents[commandcontents.length - 1] === globaluser.displayName) {
+            var split = commandcontents[commandcontents.length - 1].split(",")
+            alert(split[0] + " Found Artifact " + split[1])
+            //}
+            if (split[0] !== globaluser.displayName) {//if isnt us who deleted it
+                var objectDelete = document.getElementById(split[1])
+                objectDelete.parentNode.removeChild(objectDelete)
             }
         }
     })

@@ -1,6 +1,6 @@
 var player = document.getElementById("player")
 var colidables = document.getElementsByClassName("colidable")
-
+var artifacts = document.getElementsByClassName("artifact")
 
 function updateplayer(way, newCords) {
     var prev
@@ -13,6 +13,14 @@ function updateplayer(way, newCords) {
     } else {
         prev = player.style.left
         player.style.left = newCords
+    }
+
+    for (let i = 0; i < artifacts.length; i++) {
+        if (colides(artifacts[i])) {
+            alert(artifacts[i].id)
+            sendcommand("found", globaluser.displayName + "," + artifacts[i].id)
+            artifacts[i].parentNode.removeChild(artifacts[i])
+        }
     }
 
     for (let i = 0; i < colidables.length; i++) {
@@ -79,7 +87,7 @@ function startlocalGame(field) {
         playery: parseInt(player.style.left),
         playernick: globaluser.displayName
     });
-    drawmap(field)
+    //drawmap(field)
 }
 
 //add 50 to all
@@ -165,7 +173,7 @@ function drawmap(maparray) {
 
 function sendcommand(commandtype, commandcontent) {
     const gamecode = sessionStorage.getItem("currentgame")
-    database.ref("games/" + gamecode + "/commands").set({
+    database.ref("games/" + gamecode + "/commands/m" + Math.random().toString(36).substring(2, 15)).set({
         uid: globaluser.uid,
         command: commandtype,
         content: commandcontent
