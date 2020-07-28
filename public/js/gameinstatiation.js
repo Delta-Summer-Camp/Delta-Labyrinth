@@ -172,4 +172,6 @@ function preGameFieldInstatiation(gamecode, map) {
             }
         }
     })
+    //send join message
+    sendcommand("join", globaluser.playernick)
 }
