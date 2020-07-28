@@ -28,22 +28,21 @@ let cell = {
 
 const labyrinth = [];
 
-function genRow() {
-    let row = [];
-    for (let M = 0; M < SIZE; M++) {
-        let cell = {
-            rWall: Math.random() < 0.5, // the right wall
-            bWall: Math.random() < 0.5, // the bottom wall
-            value: 0 // future
-        }
-        row.push(cell);
-    }
-
-    return row;
-}
-
 function labGen () {
     for (let N = 0; N < SIZE; N++) {
         labyrinth.push(genRow());
+    }
+    function genRow() {
+        let row = [];
+        for (let M = 0; M < SIZE; M++) {
+            let cell = {
+                rWall: Math.random() < 0.5, // the right wall
+                bWall: Math.random() < 0.5, // the bottom wall
+                value: 0 // future
+            }
+            row.push(cell);
+        }
+
+        return row;
     }
 }
