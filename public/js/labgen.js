@@ -45,4 +45,6 @@ function labGen () {
 
         return row;
     }
+
+    return labyrinth;
 }
