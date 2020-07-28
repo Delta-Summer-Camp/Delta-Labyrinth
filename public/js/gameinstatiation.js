@@ -40,14 +40,15 @@ function joingame() {
 function creategame() {
     var gamekey = Math.random().toString(36).substring(2, 15)
     var gamelink = database.ref("games/" + gamekey)
-    var field = [] // TODO proper Map generation here
+    var field // TODO proper Map generation here
     //we have to generate it from scratch and push it to FDB
-    for (let i = 0; i < 10; i++) {//for each row
+    /*for (let i = 0; i < 10; i++) {//for each row
         field.push([])
         for (let j = 0; j < 20; j++) {//for each block
             field[i].push({"contains": Math.random() > 0.5, "rwall": Math.random() > 0.5, "bwall": Math.random() > 0.5})
         }
-    }
+    }*/
+    field = labGen()
     console.log(field)
     gamelink.set({
         //payload
@@ -85,7 +86,7 @@ function preGameFieldInstatiation(gamecode, map) {
         var gamearea = document.getElementById("gamearea")//will not fix TODO ERROR
         var playerlist = document.getElementById("playerlist")
         playerlist.innerHTML = ""
-
+        var renderlisting = true
         snapshot.forEach(function (childSnapshot) {
             if (childSnapshot.key !== globaluser.uid) {
                 if (childSnapshot.val().isOnline) {
@@ -104,19 +105,35 @@ function preGameFieldInstatiation(gamecode, map) {
 
                     //otherplayerdiv.innerHTML += "<p>" + childSnapshot.val().displayname + ": x:" + childSnapshot.val().playerx + ", y:" + childSnapshot.val().playery + "</p>"
                     console.log(childSnapshot.val().playernick + ": x: " + parseInt(childSnapshot.val().playerx) + ", y: " + childSnapshot.val().playery)
+                } else {
+                    //remove from sidebar
+                    renderlisting = false
+                    //try catch formula, not very efficiant, just to avoid errors in console
+                    try {
+                        var listingtext = document.getElementById(childSnapshot.val().playernick)
+                        listingtext.parentNode.removeChild(listingtext)
+                    } catch {
+                        _ = "" // void
+                    }
                 }
             }
-            //playerlist.innerHTML += "<p>" + childSnapshot.val().playernick + ": x: " + childSnapshot.val().playerx + ", y: " + childSnapshot.val().playery + "</p>"
-            playertext = document.createElement("p");
-            playertext.innerText = childSnapshot.val().playernick + ": x: " + (childSnapshot.val().playerx) + ", y: " + (childSnapshot.val().playery) // true location
-            playerlist.append(playertext)
+            if (renderlisting) {
+                var playerdiv = document.createElement("div")
+                playerdiv.id = childSnapshot.val().playernick
+                playerlist.append(playerdiv)
+                //playerlist.innerHTML += "<p>" + childSnapshot.val().playernick + ": x: " + childSnapshot.val().playerx + ", y: " + childSnapshot.val().playery + "</p>"
+                playertext = document.createElement("p");
+                playertext.innerText = childSnapshot.val().playernick + ": x: " + (childSnapshot.val().playerx) + ", y: " + (childSnapshot.val().playery) // true location
 
-            if (isHost) {
-                if (childSnapshot.val().playernick !== globaluser.displayName) {
-                    playerkick = document.createElement("button")
-                    playerkick.innerText = "Kick"
-                    playerkick.setAttribute('onclick', 'kickplayer(' + childSnapshot.val().playernick + ')')
-                    playerlist.append(playerkick)
+                playerdiv.append(playertext)
+
+                if (isHost) {
+                    if (childSnapshot.val().playernick !== globaluser.displayName) {
+                        playerkick = document.createElement("button")
+                        playerkick.innerText = "Kick"
+                        playerkick.setAttribute('onclick', 'kickplayer(' + childSnapshot.val().playernick + ')')
+                        playerdiv.append(playerkick)
+                    }
                 }
             }
         });

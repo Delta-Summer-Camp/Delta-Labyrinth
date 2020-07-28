@@ -34,6 +34,14 @@ function updateplayer(way, newCords) {
             return false
         }
     }
+    if (parseInt(player.style.top) < 0 || parseInt(player.style.top) > 475 || parseInt(player.style.left) < 0 || parseInt(player.style.left) > 475) {
+        if (way === "top") {
+            player.style.top = prev
+        } else {
+            player.style.left = prev
+        }
+        return false
+    }
     return true
 }
 
@@ -87,7 +95,7 @@ function startlocalGame(field) {
         playery: parseInt(player.style.left),
         playernick: globaluser.displayName
     });
-    //drawmap(field)
+    drawmap(field)
 }
 
 //add 50 to all
@@ -129,13 +137,15 @@ function drawmap(maparray) {
     var currentwritex = 1
     var currentwritey = 1
     const blocksize = 50
+    const osize = 25
     maparray.forEach((item, index) => {
         item.forEach((item, index) => {
             var gamearea = document.getElementById("gamearea")
-            if (item["contains"]) {
-                if (item["rwall"]) {
-                    //right wall
-                    //each block is 50
+            //if (item["contains"]) {
+            if (item["rWall"]) {
+                //right wall
+                //each block is 50
+                if (((currentwritey * blocksize) + blocksize) <= 550 && ((currentwritex * blocksize) + blocksize) <= 550) {
                     var newCollidable = document.createElement("div");
                     gamearea.append(newCollidable)
                     // example   <!--<div class="colidable" id="colidableobject"
@@ -148,9 +158,12 @@ function drawmap(maparray) {
                     newCollidable.style.width = (blocksize / 2) + "px"
                     newCollidable.style.height = blocksize + "px"
                     currentwritex += 1
-                } else if (item["bwall"]) {
-                    //bottom wall
-                    //each block is 50
+                }
+            }
+            if (item["bWall"]) {
+                //bottom wall
+                //each block is 50
+                if (((currentwritey * blocksize) + blocksize) <= 550 && ((currentwritex * blocksize) + blocksize) <= 550) {
                     var newCollidable = document.createElement("div");
                     gamearea.append(newCollidable)
                     // example   <!--<div class="colidable" id="colidableobject"
@@ -165,6 +178,7 @@ function drawmap(maparray) {
                     currentwritex += 1
                 }
             }
+            //}
         })
         currentwritex = 1
         currentwritey += 1 // * 50 (when used with block size
