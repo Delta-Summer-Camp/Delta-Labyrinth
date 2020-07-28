@@ -137,7 +137,7 @@ function drawmap(maparray) {
     var currentwritex = 1
     var currentwritey = 1
     const blocksize = 50
-    const osize = 25
+    const scaler = 20
     maparray.forEach((item, index) => {
         item.forEach((item, index) => {
             var gamearea = document.getElementById("gamearea")
@@ -154,8 +154,8 @@ function drawmap(maparray) {
                     newCollidable.style.position = "fixed"
                     newCollidable.style.backgroundColor = "black"
                     newCollidable.style.top = currentwritey * blocksize + "px"
-                    newCollidable.style.left = ((currentwritex * blocksize) + blocksize / 2) + "px"
-                    newCollidable.style.width = (blocksize / 2) + "px"
+                    newCollidable.style.left = ((currentwritex * blocksize) + blocksize / 2) + scaler + "px"
+                    newCollidable.style.width = (blocksize / 2) - scaler + "px"
                     newCollidable.style.height = blocksize + "px"
                     currentwritex += 1
                 }
@@ -171,10 +171,10 @@ function drawmap(maparray) {
                     newCollidable.className = "colidable"
                     newCollidable.style.position = "fixed"
                     newCollidable.style.backgroundColor = "black"
-                    newCollidable.style.top = ((currentwritey * blocksize) + blocksize / 2) + "px"
+                    newCollidable.style.top = ((currentwritey * blocksize) + blocksize / 2) + scaler + "px"
                     newCollidable.style.left = currentwritex * blocksize + "px"
                     newCollidable.style.width = blocksize + "px"
-                    newCollidable.style.height = (blocksize / 2) + "px"
+                    newCollidable.style.height = (blocksize / 2) - scaler + "px"
                     currentwritex += 1
                 }
             }
