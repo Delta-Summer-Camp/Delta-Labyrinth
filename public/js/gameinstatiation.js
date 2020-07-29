@@ -81,6 +81,10 @@ function preGameFieldInstatiation(gamecode, map) {
         for (let i = 0; i < otherplayers.length; i++) {
             otherplayers[i].parentNode.removeChild(otherplayers[i])
         }
+        othertexts = document.getElementsByClassName("otherstext")
+        for (let i = 0; i < othertexts.length; i++) {
+            othertexts[i].parentNode.removeChild(othertexts[i])
+        }
         //console.log(otherplayers[0])
         //add players
         var gamearea = document.getElementById("gamearea")
@@ -103,6 +107,8 @@ function preGameFieldInstatiation(gamecode, map) {
                     newPlayer.style.width = "25px"
                     newPlayer.style.height = "25px"
                     newPlayer.src = "static/png/igrok.png"
+                    //var newPlayerText = document.createElement("p");
+                    //newPlayerText.innerText = (childSnapshot.val().playerx + 50) + ", " + (childSnapshot.val().playery + 50)
 
                     //otherplayerdiv.innerHTML += "<p>" + childSnapshot.val().displayname + ": x:" + childSnapshot.val().playerx + ", y:" + childSnapshot.val().playery + "</p>"
                     console.log(childSnapshot.val().playernick + ": x: " + parseInt(childSnapshot.val().playerx) + ", y: " + childSnapshot.val().playery)

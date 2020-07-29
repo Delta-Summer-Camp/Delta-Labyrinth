@@ -74,7 +74,6 @@ function colides(otherobject) {
 function updateloc() { // also serves as the page load
     var player = document.getElementById("player")
     document.getElementById("coords").innerText = (parseInt(player.style.top)) + ", " + (parseInt(player.style.left)) // true location
-    // TODO send to firebase here
     console.log(globaluser.displayName + ": x: " + player.style.top + ", y: " + player.style.left)
     database.ref("games/" + sessionStorage.getItem("currentgame") + "/players/" + globaluser.uid).set({
         isOnline: true,
