@@ -146,7 +146,7 @@ function drawmap(maparray) {
                 //right wall
                 //each block is 50
                 if (((currentwritey * blocksize) + blocksize) <= 550 && ((currentwritex * blocksize) + blocksize) <= 550) {
-                    var newCollidable = document.createElement("div");
+                    var newCollidable = document.createElement("img");
                     gamearea.append(newCollidable)
                     // example   <!--<div class="colidable" id="colidableobject"
                     //        style="position: fixed; background-color: black; top: 250px; left: 200px; width: 100px; height: 50px;">-->
@@ -157,6 +157,7 @@ function drawmap(maparray) {
                     newCollidable.style.left = ((currentwritex * blocksize) + blocksize / 2) + scaler + "px"
                     newCollidable.style.width = (blocksize / 2) - scaler + "px"
                     newCollidable.style.height = blocksize + "px"
+                    newCollidable.src = "static/png/rightwall.png"
                     currentwritex += 1
                 }
             }
@@ -164,7 +165,7 @@ function drawmap(maparray) {
                 //bottom wall
                 //each block is 50
                 if (((currentwritey * blocksize) + blocksize) <= 550 && ((currentwritex * blocksize) + blocksize) <= 550) {
-                    var newCollidable = document.createElement("div");
+                    var newCollidable = document.createElement("img");
                     gamearea.append(newCollidable)
                     // example   <!--<div class="colidable" id="colidableobject"
                     //        style="position: fixed; background-color: black; top: 250px; left: 200px; width: 100px; height: 50px;">-->
@@ -175,6 +176,7 @@ function drawmap(maparray) {
                     newCollidable.style.left = currentwritex * blocksize + "px"
                     newCollidable.style.width = blocksize + "px"
                     newCollidable.style.height = (blocksize / 2) - scaler + "px"
+                    newCollidable.src = "static/png/bottomwall.png"
                     currentwritex += 1
                 }
             }

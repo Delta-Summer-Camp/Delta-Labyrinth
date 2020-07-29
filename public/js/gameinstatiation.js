@@ -83,7 +83,7 @@ function preGameFieldInstatiation(gamecode, map) {
         }
         //console.log(otherplayers[0])
         //add players
-        var gamearea = document.getElementById("gamearea")//will not fix TODO ERROR
+        var gamearea = document.getElementById("gamearea")
         var playerlist = document.getElementById("playerlist")
         playerlist.innerHTML = ""
         var renderlisting = true
@@ -92,16 +92,17 @@ function preGameFieldInstatiation(gamecode, map) {
                 if (childSnapshot.val().isOnline) {
                     //gamearea.innerHTML += "<div class=\"others\" id='" + childSnapshot.key + "' style=\"background-color: black; top: " + childSnapshot.val().playerx + "px; left: " + childSnapshot.val().playery + "px; width: 50px; height: 50px;\"></div>"
                     //"<p style=\"position: fixed; top: " + childSnapshot.val().playerx + "px; left: " + childSnapshot.val().playery + "px;\">" + childSnapshot.val().playernick + "</p>" +
-                    var newPlayer = document.createElement("div");
+                    var newPlayer = document.createElement("img");
                     gamearea.append(newPlayer)
                     newPlayer.id = childSnapshot.key
                     newPlayer.className = "others"
                     newPlayer.style.position = "fixed"
-                    newPlayer.style.backgroundColor = "black"
+                    newPlayer.style.backgroundColor = "transparent"
                     newPlayer.style.top = childSnapshot.val().playerx + 50 + "px"
                     newPlayer.style.left = childSnapshot.val().playery + 50 + "px"
                     newPlayer.style.width = "25px"
                     newPlayer.style.height = "25px"
+                    newPlayer.src = "static/png/igrok.png"
 
                     //otherplayerdiv.innerHTML += "<p>" + childSnapshot.val().displayname + ": x:" + childSnapshot.val().playerx + ", y:" + childSnapshot.val().playery + "</p>"
                     console.log(childSnapshot.val().playernick + ": x: " + parseInt(childSnapshot.val().playerx) + ", y: " + childSnapshot.val().playery)

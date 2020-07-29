@@ -1,6 +1,6 @@
 .player {
     position: absolute;
-    background-color: black;
+    background-color: transparent;
     z-index: 10;
 }
 
