@@ -27,7 +27,7 @@ function login() {
             alert("Message: " + errorMessage);
             document.getElementById("password").value = ""
         });
-    alert("Logged in")
+    //alert("Logged in")
 }
 
 function register() {
@@ -48,7 +48,7 @@ function register() {
                 displayName: displayname
             })
         })
-    alert("Created")
+    //alert("Created")
 }
 
 function deleterefs() {
