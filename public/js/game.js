@@ -17,7 +17,7 @@ function updateplayer(way, newCords) {
 
     for (let i = 0; i < artifacts.length; i++) {
         if (colides(artifacts[i])) {
-            alert(artifacts[i].id)
+            //alert(artifacts[i].id)
             sendcommand("found", globaluser.displayName + "," + artifacts[i].id)
             artifacts[i].parentNode.removeChild(artifacts[i])
         }
@@ -188,10 +188,11 @@ function drawmap(maparray) {
 
 function sendcommand(commandtype, commandcontent) {
     const gamecode = sessionStorage.getItem("currentgame")
-    database.ref("games/" + gamecode + "/commands/m" + Math.random().toString(36).substring(2, 15)).set({
+    database.ref("games/" + gamecode + "/commands/" + Math.random().toString(36).substring(2, 15)).set({
         uid: globaluser.uid,
         command: commandtype,
-        content: commandcontent
+        content: commandcontent,
+        date: firebase.database.ServerValue.TIMESTAMP
     })
 }
 

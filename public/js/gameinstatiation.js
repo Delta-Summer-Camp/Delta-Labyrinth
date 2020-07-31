@@ -37,23 +37,49 @@ function joingame() {
     //add the player updating program
 }
 
+function createartifacts() {
+    var artifacts = []
+    artifacts.push({
+        "artifacttype": "kuznya",
+        "artifactx": Math.ceil(Math.ceil(Math.random() * 450) / 50) * 50,
+        "artifacty": Math.ceil(Math.ceil(Math.random() * 450) / 50) * 50
+    })
+    artifacts.push({
+        "artifacttype": "pedestal",
+        "artifactx": Math.ceil(Math.ceil(Math.random() * 450) / 50) * 50,
+        "artifacty": Math.ceil(Math.ceil(Math.random() * 450) / 50) * 50
+    })
+    artifacts.push({
+        "artifacttype": "cookie",
+        "artifactx": Math.ceil(Math.ceil(Math.random() * 450) / 50) * 50,
+        "artifacty": Math.ceil(Math.ceil(Math.random() * 450) / 50) * 50
+    })
+    artifacts.push({
+        "artifacttype": "knijka",
+        "artifactx": Math.ceil(Math.ceil(Math.random() * 450) / 50) * 50,
+        "artifacty": Math.ceil(Math.ceil(Math.random() * 450) / 50) * 50
+    })
+    artifacts.push({
+        "artifacttype": "telik",
+        "artifactx": Math.ceil(Math.ceil(Math.random() * 450) / 50) * 50,
+        "artifacty": Math.ceil(Math.ceil(Math.random() * 450) / 50) * 50
+    })
+
+    return artifacts
+}
+
 function creategame() {
     var gamekey = Math.random().toString(36).substring(2, 15)
     var gamelink = database.ref("games/" + gamekey)
-    var field // TODO proper Map generation here
-    //we have to generate it from scratch and push it to FDB
-    /*for (let i = 0; i < 10; i++) {//for each row
-        field.push([])
-        for (let j = 0; j < 20; j++) {//for each block
-            field[i].push({"contains": Math.random() > 0.5, "rwall": Math.random() > 0.5, "bwall": Math.random() > 0.5})
-        }
-    }*/
-    field = labGen()
-    console.log(field)
+    var field = labGen()
+    var genartifacts = createartifacts()
+    //console.log(field)
+
     gamelink.set({
         //payload
         owner: globaluser.uid,
         gamemap: field, // pull gamelib here DONE
+        artifacts: genartifacts,
         players: null
     })
     isHost = true
@@ -151,16 +177,15 @@ function preGameFieldInstatiation(gamecode, map) {
     startlocalGame(map)//pass field generator object here TODO
     //if the player disconnects
     database.ref("games/" + gamecode + "/players/" + globaluser.uid + "/isOnline").onDisconnect().set(false);
-    database.ref("games/" + gamecode + "/commands").on('value', (snapshot) => {
+    database.ref("games/" + gamecode + "/commands").orderByChild('date').on('value', (snapshot) => {
         // TODO Interpret commands
         var commands = []
         var commandcontents = []
         snapshot.forEach(function (element) {
             commands.push(element.val().command)
             commandcontents.push(element.val().content)
-            //console.log(element.val())
-            //console.log(element.val())
         })
+        //alert(commands)
         if (commands[commands.length - 1] === "kick") {
             if (commandcontents[commandcontents.length - 1] === globaluser.displayName) {
                 alert("You have been kicked from the game by the host")
@@ -179,6 +204,22 @@ function preGameFieldInstatiation(gamecode, map) {
             }
         }
     })
+
+    database.ref("games/" + gamecode + "/artifacts").on('value', (snapshot) => {
+        var gamearea = document.getElementById("gamearea")
+        snapshot.forEach(function (childSnapshot) {
+            var newArtifact = document.createElement("img")
+            newArtifact.src = "static/png/" + childSnapshot.val().artifacttype + ".png"
+            newArtifact.style.top = childSnapshot.val().artifactx + 50 + "px"
+            newArtifact.style.left = childSnapshot.val().artifacty + 50 + "px"
+            newArtifact.className = "artifact"
+            newArtifact.style.position = "fixed"
+            newArtifact.style.width = "25px"
+            newArtifact.style.height = "25px"
+            newArtifact.id = childSnapshot.val().artifacttype
+            gamearea.append(newArtifact)
+        })
+    })
     //send join message
-    sendcommand("join", globaluser.playernick)
+    sendcommand("join", globaluser.displayName)
 }
