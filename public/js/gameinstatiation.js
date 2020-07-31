@@ -156,25 +156,24 @@ function preGameFieldInstatiation(gamecode, map) {
                 playerlist.append(playerdiv)
                 //playerlist.innerHTML += "<p>" + childSnapshot.val().playernick + ": x: " + childSnapshot.val().playerx + ", y: " + childSnapshot.val().playery + "</p>"
                 playertext = document.createElement("p");
-                playertext.innerText = childSnapshot.val().playernick + ": x: " + (childSnapshot.val().playerx) + ", y: " + (childSnapshot.val().playery) // true location
+                playertext.innerText = childSnapshot.val().namedisplay + ": x: " + (childSnapshot.val().playerx) + ", y: " + (childSnapshot.val().playery) // true location
 
                 playerdiv.append(playertext)
 
-                if (isHost) {
-                    if (childSnapshot.val().playernick !== globaluser.displayName) {
+                /*if (isHost) {
+                    if (childSnapshot.val().playernick !== globaluser.uid) {
                         playerkick = document.createElement("button")
                         playerkick.innerText = "Kick"
                         playerkick.setAttribute('onclick', 'kickplayer(' + childSnapshot.val().playernick + ')')
                         playerdiv.append(playerkick)
                     }
-                }
+                }*/
             }
         });
-        //add the ondisconnect class TODO
     }, (error) => {
         console.error(error);
     });
-    startlocalGame(map)//pass field generator object here TODO
+    startlocalGame(map)
     //if the player disconnects
     database.ref("games/" + gamecode + "/players/" + globaluser.uid + "/isOnline").onDisconnect().set(false);
     database.ref("games/" + gamecode + "/commands").orderByChild('date').on('value', (snapshot) => {
@@ -187,7 +186,7 @@ function preGameFieldInstatiation(gamecode, map) {
         })
         //alert(commands)
         if (commands[commands.length - 1] === "kick") {
-            if (commandcontents[commandcontents.length - 1] === globaluser.displayName) {
+            if (commandcontents[commandcontents.length - 1] === globaluser.uid) {
                 alert("You have been kicked from the game by the host")
                 window.close() // TODO change to proper kick
             }
@@ -198,7 +197,7 @@ function preGameFieldInstatiation(gamecode, map) {
             var split = commandcontents[commandcontents.length - 1].split(",")
             alert(split[0] + " Found Artifact " + split[1])
             //}
-            if (split[0] !== globaluser.displayName) {//if isnt us who deleted it
+            if (split[0] !== globaluser.uid) {//if isnt us who deleted it
                 var objectDelete = document.getElementById(split[1])
                 objectDelete.parentNode.removeChild(objectDelete)
             }
@@ -221,5 +220,5 @@ function preGameFieldInstatiation(gamecode, map) {
         })
     })
     //send join message
-    sendcommand("join", globaluser.displayName)
+    sendcommand("join", globaluser.uid)
 }

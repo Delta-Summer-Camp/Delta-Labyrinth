@@ -18,7 +18,7 @@ function updateplayer(way, newCords) {
     for (let i = 0; i < artifacts.length; i++) {
         if (colides(artifacts[i])) {
             //alert(artifacts[i].id)
-            sendcommand("found", globaluser.displayName + "," + artifacts[i].id)
+            sendcommand("found", globaluser.displayName + "," + artifacts[i].id + "," + globaluser.uid)
             artifacts[i].parentNode.removeChild(artifacts[i])
         }
     }
@@ -74,25 +74,26 @@ function colides(otherobject) {
 function updateloc() { // also serves as the page load
     var player = document.getElementById("player")
     document.getElementById("coords").innerText = (parseInt(player.style.top)) + ", " + (parseInt(player.style.left)) // true location
-    console.log(globaluser.displayName + ": x: " + player.style.top + ", y: " + player.style.left)
+    console.log(globaluser.uid + ": x: " + player.style.top + ", y: " + player.style.left)
     database.ref("games/" + sessionStorage.getItem("currentgame") + "/players/" + globaluser.uid).set({
         isOnline: true,
         playerx: parseInt(player.style.top),
         playery: parseInt(player.style.left),
-        playernick: globaluser.displayName
+        playernick: globaluser.uid,
+        namedisplay: globaluser.displayName
     });
 }
 
 function startlocalGame(field) {
     var player = document.getElementById("player")
     document.getElementById("coords").innerText = (parseInt(player.style.top)) + ", " + (parseInt(player.style.left)) // true location
-    // TODO send to firebase here
-    console.log(globaluser.displayName + ": x: " + player.style.top + ", y: " + player.style.left)
+    console.log(globaluser.uid + ": x: " + player.style.top + ", y: " + player.style.left)
     database.ref("games/" + sessionStorage.getItem("currentgame") + "/players/" + globaluser.uid).set({
         isOnline: true,
         playerx: parseInt(player.style.top),
         playery: parseInt(player.style.left),
-        playernick: globaluser.displayName
+        playernick: globaluser.uid,
+        namedisplay: globaluser.displayName
     });
     drawmap(field)
 }
@@ -190,6 +191,7 @@ function sendcommand(commandtype, commandcontent) {
     const gamecode = sessionStorage.getItem("currentgame")
     database.ref("games/" + gamecode + "/commands/" + Math.random().toString(36).substring(2, 15)).set({
         uid: globaluser.uid,
+        namedisplay: globaluser.displayName,
         command: commandtype,
         content: commandcontent,
         date: firebase.database.ServerValue.TIMESTAMP
