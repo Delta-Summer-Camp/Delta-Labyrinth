@@ -192,20 +192,20 @@ function preGameFieldInstatiation(gamecode, map) {
 
             if (command === "found") {
                 var split = content.split(",")
-                const duplicate = document.getElementById(split[1]) === null
-                if (!duplicate) {
-                    var chat = document.getElementById("chatspace")
-                    //if (commandcontents[commandcontents.length - 1] === globaluser.displayName) {
-                    //alert(split[0] + " Found Artifact " + split[1])
-                    var chatmsg = document.createElement("p")
-                    chatmsg.innerText = split[0] + " Found Artifact " + split[1]
-                    chat.append(chatmsg)
-                }
+                //const duplicate = document.getElementById(split[1]) === null
+                //if (!duplicate) {
+                var chat = document.getElementById("chatspace")
+                //if (commandcontents[commandcontents.length - 1] === globaluser.displayName) {
+                //alert(split[0] + " Found Artifact " + split[1])
+                var chatmsg = document.createElement("p")
+                chatmsg.innerText = split[0] + " Found Artifact " + split[1]
+                chat.append(chatmsg)
+                //}
             }
             if (command === "message") {
                 var chat = document.getElementById("chatspace")
                 var chatmsg = document.createElement("p")
-                chatmsg.innerText = content
+                chatmsg.innerText = element.val().namedisplay + ": " + content
                 chat.append(chatmsg)
             }
         })
