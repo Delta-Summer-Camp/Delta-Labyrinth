@@ -25,6 +25,12 @@
     left: 50px;
 }
 
+#chat {
+    position: absolute;
+    left: 800px;
+    top: 100px;
+}
+
 body {
     background-color: gray;
 }

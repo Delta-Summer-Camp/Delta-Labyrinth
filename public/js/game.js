@@ -201,3 +201,15 @@ function sendcommand(commandtype, commandcontent) {
 function kickplayer(playernick) {
     sendcommand("kick", playernick)
 }
+
+function signout() {
+    firebase.auth().signOut().then(function () {
+        alert("Logged Out");
+        location.reload(true)
+    });
+}
+
+function onclicksend() {
+    sendcommand("message", document.getElementById("enterspace").value)
+    document.getElementById("enterspace").value = ""
+}

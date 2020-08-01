@@ -96,6 +96,7 @@ function preGameFieldInstatiation(gamecode, map) {
     document.getElementById("gamearea").style.display = "block"
     document.getElementById("coords").style.display = "block"
     document.getElementById("playerlist").style.display = "block"
+    document.getElementById("chat").style.display = "block"
     isGameActive = true
 
     //other player update
@@ -180,9 +181,33 @@ function preGameFieldInstatiation(gamecode, map) {
         // TODO Interpret commands
         var commands = []
         var commandcontents = []
+        document.getElementById("chatspace").innerHTML = ""
         snapshot.forEach(function (element) {
             commands.push(element.val().command)
             commandcontents.push(element.val().content)
+
+            //chat generation
+            var command = element.val().command
+            var content = element.val().content
+
+            if (command === "found") {
+                var split = content.split(",")
+                const duplicate = document.getElementById(split[1]) === null
+                if (!duplicate) {
+                    var chat = document.getElementById("chatspace")
+                    //if (commandcontents[commandcontents.length - 1] === globaluser.displayName) {
+                    //alert(split[0] + " Found Artifact " + split[1])
+                    var chatmsg = document.createElement("p")
+                    chatmsg.innerText = split[0] + " Found Artifact " + split[1]
+                    chat.append(chatmsg)
+                }
+            }
+            if (command === "message") {
+                var chat = document.getElementById("chatspace")
+                var chatmsg = document.createElement("p")
+                chatmsg.innerText = content
+                chat.append(chatmsg)
+            }
         })
         //alert(commands)
         if (commands[commands.length - 1] === "kick") {
@@ -193,15 +218,14 @@ function preGameFieldInstatiation(gamecode, map) {
         }
 
         if (commands[commands.length - 1] === "found") {
-            //if (commandcontents[commandcontents.length - 1] === globaluser.displayName) {
             var split = commandcontents[commandcontents.length - 1].split(",")
-            alert(split[0] + " Found Artifact " + split[1])
             //}
             if (split[0] !== globaluser.uid) {//if isnt us who deleted it
                 var objectDelete = document.getElementById(split[1])
                 objectDelete.parentNode.removeChild(objectDelete)
             }
         }
+
     })
 
     database.ref("games/" + gamecode + "/artifacts").on('value', (snapshot) => {
