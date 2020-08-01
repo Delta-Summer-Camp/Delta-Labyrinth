@@ -158,7 +158,6 @@ function drawmap(maparray) {
                     newCollidable.style.width = (blocksize / 2) - scaler + "px"
                     newCollidable.style.height = blocksize + "px"
                     newCollidable.src = "static/png/rightwall.png"
-                    currentwritex += 1
                 }
             }
             if (item["bWall"]) {
@@ -177,9 +176,9 @@ function drawmap(maparray) {
                     newCollidable.style.width = blocksize + "px"
                     newCollidable.style.height = (blocksize / 2) - scaler + "px"
                     newCollidable.src = "static/png/bottomwall.png"
-                    currentwritex += 1
                 }
             }
+            currentwritex += 1
             //}
         })
         currentwritex = 1
