@@ -37,15 +37,25 @@
 <br>
 <div class="modal_block" id="modal_block" style="display: none">
   <form action="javascript:void(0);" id='loginform'>
-    <p id='type'>Login!</p>
-    <label for="email">Email:</label>
-    <input id="email" name="email" type="text"><br><br>
-    <label for="password">Password:</label>
-    <input id="password" name="password" type="password"><br><br>
-    <label for="displayname" id="displaynametext" style="display: none">Display Name: </label>
-    <input id="displayname" name="displayname" style="display: none" type="text"><br>
-    <button class="tootheraction" id="tootheraction" onclick="switchtoreg()" value="otheraction">Register</button>
-    <input id='actionsubmit' onclick="login()" type="submit" value="Submit">
+
+    <ul class="top-area">
+      <li class="tab active" id="switchToLogIn_Btn" onclick="switchtologin()"><a href="#login">Log In</a></li>
+      <li class="tab" id="switchToReq_Btn" onclick="switchtoreg()"><a href="#signup">Sign Up</a></li>
+
+    </ul>
+
+    <!--<p id='type'>Login!</p>-->
+    <label for="email"></label>
+    <input class="login_register" id="email" name="email" placeholder="email" type="text"><br><br>
+    <label for="password"></label>
+    <input class="login_register" id="password" name="password" placeholder="password" type="password"><br><br>
+    <label for="displayname" id="displaynametext" style="display: none"></label>
+    <input class="login_register" id="displayname" name="displayname" placeholder="displayname" style="display: none"
+           type="text"><br>
+    <!--<button class="tootheraction" id="tootheraction" onclick="switchtoreg()" value="otheraction">Register</button>-->
+    <!--<input id='actionsubmit' onclick="login()" type="submit" value="Submit">-->
+    <button class="button button-block" id="submit-button" onclick="login()" type="submit"/>
+    Submit</button>
   </form>
 </div>
 
