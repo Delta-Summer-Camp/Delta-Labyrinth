@@ -1,0 +1,21 @@
+colides:
+    //rough debug
+    //console.log("my" + mytop + " " + mybottom + " " + myleft + " " + myright)
+    //console.log("other" + othertop + " " + otherbottom + " " + otherleft + " " + otherright)
+    //pairings
+    //console.log(mybottom + " greater then " + othertop)
+    //console.log(mytop + " less then " + otherbottom)
+    //console.log(myright + " greater then " + otherleft)
+    //console.log(myleft + " less then " + otherright)
+    //console.log("\n")
+    //if (mybottom > othertop && mytop < otherbottom){
+        //console.log("inline")
+    //}
+        //console.log(mytopleft + ", " + othertopright)
+        /*shit rules
+        * approach from right: y<120
+        * approach from left y>20
+        * approach from top >200
+        * approach from bottom <300*/
+        // grs for the adjusted object: 70<y<120 & 250<300
+        // check if collided (mybottomright <

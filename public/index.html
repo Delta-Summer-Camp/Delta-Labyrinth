@@ -1,65 +1,82 @@
 <!DOCTYPE html>
 <html>
-  <head>
-    <meta charset="utf-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1">
-    <title>Welcome to Firebase Hosting</title>
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Index</title>
 
-    <!-- update the version number as needed -->
-    <script defer src="/__/firebase/7.16.1/firebase-app.js"></script>
-    <!-- include only the Firebase features as you need -->
-    <script defer src="/__/firebase/7.16.1/firebase-auth.js"></script>
-    <script defer src="/__/firebase/7.16.1/firebase-database.js"></script>
-    <script defer src="/__/firebase/7.16.1/firebase-messaging.js"></script>
-    <script defer src="/__/firebase/7.16.1/firebase-storage.js"></script>
-    <!-- initialize the SDK after all desired features are loaded -->
-    <script defer src="/__/firebase/init.js"></script>
+  <link href="css/index.css" rel="stylesheet">
+<body id="body">
+<p class="cordstext" id="coords" style="display: none"></p>
+<div class="gamearea" id="gamearea" style="display: none">
+  <!--<p id="playername" class="playercoords">NaN, NaN</p>-->
+  <img class="player" id="player" src="static/png/igrok.png"
+       style="top: 0px; left: 0px; width: 25px; height: 25px;">
 
-    <style media="screen">
-      body { background: #ECEFF1; color: rgba(0,0,0,0.87); font-family: Roboto, Helvetica, Arial, sans-serif; margin: 0; padding: 0; }
-      #message { background: white; max-width: 360px; margin: 100px auto 16px; padding: 32px 24px; border-radius: 3px; }
-      #message h2 { color: #ffa100; font-weight: bold; font-size: 16px; margin: 0 0 8px; }
-      #message h1 { font-size: 22px; font-weight: 300; color: rgba(0,0,0,0.6); margin: 0 0 16px;}
-      #message p { line-height: 140%; margin: 16px 0 24px; font-size: 14px; }
-      #message a { display: block; text-align: center; background: #039be5; text-transform: uppercase; text-decoration: none; color: white; padding: 16px; border-radius: 4px; }
-      #message, #message a { box-shadow: 0 1px 3px rgba(0,0,0,0.12), 0 1px 2px rgba(0,0,0,0.24); }
-      #load { color: rgba(0,0,0,0.4); text-align: center; font-size: 13px; }
-      @media (max-width: 600px) {
-        body, #message { margin-top: 0; background: white; box-shadow: none; }
-        body { border-top: 16px solid #ffa100; }
-      }
-    </style>
-  </head>
-  <body>
-    <div id="message">
-      <h2>Welcome</h2>
-      <h1>Firebase Hosting Setup Complete</h1>
-      <p>You're seeing this because you've successfully setup Firebase Hosting. Now it's time to go build something extraordinary!</p>
-      <a target="_blank" href="https://firebase.google.com/docs/hosting/">Open Hosting Documentation</a>
-    </div>
-    <p id="load">Firebase SDK Loading&hellip;</p>
+  </img>
+  <!--use to be 50/50-->
+  <!--<div class="otherplayers" id="otherplayers"></div>-->
+  <!--<div id="collidableobjects">-->
+  <!--<div class="colidable" id="colidableobject"
+       style="position: fixed; background-color: black; top: 250px; left: 200px; width: 100px; height: 50px;">-->
+  <!--</div>
+  <div class="artifact" id="testartifact"
+       style="position: fixed; top: 300px; left: 250px; width: 50px; height: 50px; background-color: black"></div>-->
+</div>
+</div>
+<div id="playerlist" style="display: none">
+</div>
+<div id="chat" style="display: none">
+  <div id="chatspace">
 
-    <script>
-      document.addEventListener('DOMContentLoaded', function() {
-        // // 🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥
-        // // The Firebase SDK is initialized and available here!
-        //
-        // firebase.auth().onAuthStateChanged(user => { });
-        // firebase.database().ref('/path/to/ref').on('value', snapshot => { });
-        // firebase.messaging().requestPermission().then(() => { });
-        // firebase.storage().ref('/path/to/ref').getDownloadURL().then(() => { });
-        //
-        // // 🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥
+  </div>
+  <input id="enterspace" type="text">
+  <input id="submittext" onclick="onclicksend()" type="submit"><br>
+  <button onclick='signout()'>Signout</button>
+</div>
+<br>
+<div class="modal_block" id="modal_block" style="display: none">
+  <form action="javascript:void(0);" id='loginform'>
+    <p id='type'>Login!</p>
+    <label for="email">Email:</label>
+    <input id="email" name="email" type="text"><br><br>
+    <label for="password">Password:</label>
+    <input id="password" name="password" type="password"><br><br>
+    <label for="displayname" id="displaynametext" style="display: none">Display Name: </label>
+    <input id="displayname" name="displayname" style="display: none" type="text"><br>
+    <button class="tootheraction" id="tootheraction" onclick="switchtoreg()" value="otheraction">Register</button>
+    <input id='actionsubmit' onclick="login()" type="submit" value="Submit">
+  </form>
+</div>
 
-        try {
-          let app = firebase.app();
-          let features = ['auth', 'database', 'messaging', 'storage'].filter(feature => typeof app[feature] === 'function');
-          document.getElementById('load').innerHTML = `Firebase SDK loaded with ${features.join(', ')}`;
-        } catch (e) {
-          console.error(e);
-          document.getElementById('load').innerHTML = 'Error loading the Firebase SDK, check the console.';
-        }
-      });
-    </script>
-  </body>
+<div id="welcome">
+  <h1>Welcome to Labyrinth by Delta Camp and Delta.js Team</h1><br>
+  <p>We see that you are not in a game, would you like to join or create a Game</p><br>
+  <button onclick="creategame()">Create Game</button>
+  <button onclick="joingame()">Join Game</button>
+  <button onclick="deleterefs()">Delete Cache Reference</button>
+</div>
+<!-- update the version number as needed, moved to cdn to make autocomplete work properly-->
+<!-- Insert these scripts at the bottom of the HTML, but before you use any Firebase services -->
+
+<!-- Firebase App (the core Firebase SDK) is always required and must be listed first -->
+<script src="/__/firebase/7.17.1/firebase-app.js"></script>
+
+<!-- If you enabled Analytics in your project, add the Firebase SDK for Analytics -->
+<script src="/__/firebase/7.17.1/firebase-analytics.js"></script>
+
+<!-- Add Firebase products that you want to use -->
+<script src="/__/firebase/7.17.1/firebase-auth.js"></script>
+
+<script src="/__/firebase/7.17.1/firebase-database.js"></script>
+<script src="/__/firebase/init.js"></script>
+
+<!--<script defer src="https://www.gstatic.com/firebasejs/init.js"></script>-->
+<script src="js/detectBrowser.js"></script>
+<script src="js/firebase.js"></script>
+<script src="js/labyrinthGen.js"></script>
+<script src="js/index.js"></script>
+<script src="js/gameinstatiation.js"></script>
+<script src="js/game.js"></script>
+</body>
 </html>
