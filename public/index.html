@@ -1,60 +1,68 @@
 <!DOCTYPE html>
 <html>
 <head>
-  <meta charset="utf-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1">
-  <title>Index</title>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Index</title>
+    <link rel="stylesheet" href="index.css">
 
-  <link href="css/index.css" rel="stylesheet">
 <body id="body">
 <p class="cordstext" id="coords" style="display: none"></p>
 <div class="gamearea" id="gamearea" style="display: none">
-  <!--<p id="playername" class="playercoords">NaN, NaN</p>-->
-  <img class="player" id="player" src="static/png/igrok.png"
-       style="top: 0px; left: 0px; width: 25px; height: 25px;">
+    <!--<p id="playername" class="playercoords">NaN, NaN</p>-->
+    <img class="player" id="player" src="igrok.png"
+         style="top: 0px; left: 0px; width: 25px; height: 25px;">
 
-  </img>
-  <!--use to be 50/50-->
-  <!--<div class="otherplayers" id="otherplayers"></div>-->
-  <!--<div id="collidableobjects">-->
-  <!--<div class="colidable" id="colidableobject"
-       style="position: fixed; background-color: black; top: 250px; left: 200px; width: 100px; height: 50px;">-->
-  <!--</div>
-  <div class="artifact" id="testartifact"
-       style="position: fixed; top: 300px; left: 250px; width: 50px; height: 50px; background-color: black"></div>-->
+    </img>
+    <!--use to be 50/50-->
+    <!--<div class="otherplayers" id="otherplayers"></div>-->
+    <!--<div id="collidableobjects">-->
+    <!--<div class="colidable" id="colidableobject"
+         style="position: fixed; background-color: black; top: 250px; left: 200px; width: 100px; height: 50px;">-->
+    <!--</div>
+    <div class="artifact" id="testartifact"
+         style="position: fixed; top: 300px; left: 250px; width: 50px; height: 50px; background-color: black"></div>-->
 </div>
 </div>
 <div id="playerlist" style="display: none">
 </div>
 <div id="chat" style="display: none">
-  <div id="chatspace">
+    <div id="chatspace">
 
-  </div>
-  <input id="enterspace" type="text">
-  <input id="submittext" onclick="onclicksend()" type="submit"><br>
-  <button onclick='signout()'>Signout</button>
+    </div>
+    <input id="enterspace" type="text">
+    <input id="submittext" onclick="onclicksend()" type="submit"><br>
+    <button onclick='signout()'>Signout</button>
 </div>
 <br>
 <div class="modal_block" id="modal_block" style="display: none">
-  <form action="javascript:void(0);" id='loginform'>
-    <p id='type'>Login!</p>
-    <label for="email">Email:</label>
-    <input id="email" name="email" type="text"><br><br>
-    <label for="password">Password:</label>
-    <input id="password" name="password" type="password"><br><br>
-    <label for="displayname" id="displaynametext" style="display: none">Display Name: </label>
-    <input id="displayname" name="displayname" style="display: none" type="text"><br>
-    <button class="tootheraction" id="tootheraction" onclick="switchtoreg()" value="otheraction">Register</button>
-    <input id='actionsubmit' onclick="login()" type="submit" value="Submit">
-  </form>
+    <form action="javascript:void(0);" id='loginform'>
+
+        <ul class="top-area">
+            <li id="switchToLogIn_Btn" class="tab active"  onclick="switchtologin()"><a href="#login">Log In</a></li>
+            <li id="switchToReq_Btn" class="tab" onclick="switchtoreg()"><a href="#signup">Sign Up</a></li>
+
+        </ul>
+
+        <!--<p id='type'>Login!</p>-->
+        <label for="email"></label>
+        <input class="login_register" id="email" name="email" placeholder="email" type="text"><br><br>
+        <label for="password"></label>
+        <input class="login_register" id="password" name="password" placeholder="password" type="password"><br><br>
+        <label for="displayname" id="displaynametext" style="display: none"></label>
+        <input class="login_register" id="displayname" name="displayname" placeholder="displayname" style="display: none" type="text"><br>
+        <!--<button class="tootheraction" id="tootheraction" onclick="switchtoreg()" value="otheraction">Register</button>-->
+        <!--<input id='actionsubmit' onclick="login()" type="submit" value="Submit">-->
+        <button id="submit-button" type="submit" onclick="login()" class="button button-block"/>Submit</button>
+    </form>
 </div>
 
 <div id="welcome">
-  <h1>Welcome to Labyrinth by Delta Camp and Delta.js Team</h1><br>
-  <p>We see that you are not in a game, would you like to join or create a Game</p><br>
-  <button onclick="creategame()">Create Game</button>
-  <button onclick="joingame()">Join Game</button>
-  <button onclick="deleterefs()">Delete Cache Reference</button>
+    <h1 style="color: black">Welcome to Labyrinth by Delta Camp and Delta.js Team</h1><br>
+    <p>We see that you are not in a game, would you like to join or create a Game</p><br>
+    <button onclick="creategame()">Create Game</button>
+    <button onclick="joingame()">Join Game</button>
+    <button onclick="deleterefs()">Delete Cache Reference</button>
 </div>
 <!-- update the version number as needed, moved to cdn to make autocomplete work properly-->
 <script src="https://www.gstatic.com/firebasejs/7.17.0/firebase-app.js"></script>
@@ -62,11 +70,11 @@
 <script src="https://www.gstatic.com/firebasejs/7.17.0/firebase-auth.js"></script>
 <script src="https://www.gstatic.com/firebasejs/7.17.0/firebase-database.js"></script>
 <!--<script defer src="https://www.gstatic.com/firebasejs/init.js"></script>-->
-<script src="js/detectBrowser.js"></script>
-<script src="js/firebase.js"></script>
-<script src="js/labyrinthGen.js"></script>
-<script src="js/index.js"></script>
-<script src="js/gameinstatiation.js"></script>
-<script src="js/game.js"></script>
+<script src="detectBrowser.js"></script>
+<script src="firebase.js"></script>
+<script src="labyrinthGen.js"></script>
+<script src="index.js"></script>
+<script src="gameinstatiation.js"></script>
+<script src="game.js"></script>
 </body>
 </html>
