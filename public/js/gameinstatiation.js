@@ -219,8 +219,8 @@ function preGameFieldInstatiation(gamecode, map) {
 
         if (commands[commands.length - 1] === "found") {
             var split = commandcontents[commandcontents.length - 1].split(",")
-            //}
-            if (split[0] !== globaluser.uid) {//if isnt us who deleted it
+            if (split[2] !== globaluser.uid) {//if isnt us who deleted it
+                //alert("deletion for " + split[1])
                 var objectDelete = document.getElementById(split[1])
                 objectDelete.parentNode.removeChild(objectDelete)
             }
