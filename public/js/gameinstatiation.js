@@ -94,7 +94,7 @@ function preGameFieldInstatiation(gamecode, map) {
     //game has been generated at this point
     document.getElementById("welcome").style.display = "none"
     document.getElementById("gamearea").style.display = "block"
-    document.getElementById("coords").style.display = "block"
+    //document.getElementById("coords").style.display = "block"
     document.getElementById("playerlist").style.display = "block"
     document.getElementById("chat").style.display = "block"
     isGameActive = true
