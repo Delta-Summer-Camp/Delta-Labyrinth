@@ -45,7 +45,7 @@ function detectBrowserUA() {
 function forceProperBrowser(should) {
     if (should) {
         alert("This webapp only supports Firefox / Chrome and its derivities, please use one of them")
-        window.close()
+        //window.close() // probobly shouldn't delet the window
     }
 }
 

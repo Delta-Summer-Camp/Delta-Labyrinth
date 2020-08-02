@@ -208,6 +208,12 @@ function preGameFieldInstatiation(gamecode, map) {
                 chatmsg.innerText = element.val().namedisplay + ": " + content
                 chat.append(chatmsg)
             }
+            if (command === "join") {
+                var chat = document.getElementById("chatspace")
+                var chatmsg = document.createElement("p")
+                chatmsg.innerText = element.val().namedisplay + " joined"
+                chat.append(chatmsg)
+            }
         })
         //alert(commands)
         if (commands[commands.length - 1] === "kick") {
@@ -217,19 +223,23 @@ function preGameFieldInstatiation(gamecode, map) {
             }
         }
 
-        if (commands[commands.length - 1] === "found") {
+        /*if (commands[commands.length - 1] === "found") {
             var split = commandcontents[commandcontents.length - 1].split(",")
             //}
-            if (split[0] !== globaluser.uid) {//if isnt us who deleted it
+            if (split[2] !== globaluser.uid) {//if isnt us who deleted it
                 var objectDelete = document.getElementById(split[1])
                 objectDelete.parentNode.removeChild(objectDelete)
             }
-        }
+        }*/ // check out the games/./artifacts on for for the currenetly used code (for instantiation
 
     })
 
     database.ref("games/" + gamecode + "/artifacts").on('value', (snapshot) => {
         var gamearea = document.getElementById("gamearea")
+        var artifacts = document.getElementsByClassName("artifact")
+        for (let i = 0; i < artifacts.length; i++) {
+            artifacts[i].parentNode.removeChild(artifacts[i])
+        }
         snapshot.forEach(function (childSnapshot) {
             var newArtifact = document.createElement("img")
             newArtifact.src = "static/png/" + childSnapshot.val().artifacttype + ".png"

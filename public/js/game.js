@@ -19,7 +19,14 @@ function updateplayer(way, newCords) {
         if (colides(artifacts[i])) {
             //alert(artifacts[i].id)
             sendcommand("found", globaluser.displayName + "," + artifacts[i].id + "," + globaluser.uid)
-            artifacts[i].parentNode.removeChild(artifacts[i])
+            //artifacts[i].parentNode.removeChild(artifacts[i]) // converted to remove from db
+            database.ref("games/" + sessionStorage.getItem("currentgame") + "/artifacts").once('value').then(function (snapshot) {
+                snapshot.forEach(function (subvalue) {
+                    if (subvalue.val().artifacttype === artifacts[i].id) {
+                        database.ref("games/" + sessionStorage.getItem("currentgame") + "/artifacts/" + subvalue.key).remove()
+                    }
+                })
+            })
         }
     }
 
