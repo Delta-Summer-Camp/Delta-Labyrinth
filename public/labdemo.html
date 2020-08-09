@@ -1,0 +1,151 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Labyrinth design demo</title>
+    <style>
+        * {
+            box-sizing: border-box; /* Border size included in box size */
+        }
+        #gameArea {
+            position: fixed;
+            top: 20px;
+            left: 20px;
+            width: 600px; /* Need to be set dynamically in real game */
+            height: 600px; /* Need to be set dynamically in real game */
+            border: darkblue 1px solid;
+        }
+        .cell_wrap {
+            position: absolute;
+            width: 100px; /* Need to be set dynamically in real game */
+            height: 100px; /* Need to be set dynamically in real game */
+        }
+        .cell_wrap .r_wall {
+            position: absolute;
+            right: 0;
+            top: 0;
+            height: 90%;
+            width: 10%;
+            border: #1da1f2 1px solid;
+        }
+        .cell_wrap .b_wall {
+            position: absolute;
+            left: 0;
+            bottom: 0;
+            height: 10%;
+            width: 90%;
+            border: #1df2a1 1px solid;
+        }
+        .cell_wrap .corner {
+            position: absolute;
+            bottom: 0;
+            right: 0;
+            width: 10%;
+            height: 10%;
+            background-color: #f21da1;
+        }
+
+        /* This part for demo only. It MUST be set by .js */
+        #cell_0_0 {
+            top: 0;
+            left: 0;
+        }
+        #cell_0_0 .r_wall {
+            background-color: #ffa100;
+        }
+        #cell_0_1 {
+            top: 0;
+            left: 100px;
+        }
+        #cell_0_1 .b_wall {
+            background-color: #ffa100;
+        }
+        #cell_0_1 .r_wall {
+            background-color: #00ffa1;
+        }
+        #cell_0_2 {
+            top: 0;
+            left: 200px;
+        }
+        #cell_0_3 {
+            top: 0;
+            left: 300px;
+        }
+        #cell_0_3 .r_wall {
+            background-color: #ffa100;
+        }
+        #cell_0_4 {
+            top: 0;
+            left: 400px;
+        }
+        #cell_0_4 .b_wall {
+            background-color: #ffa100;
+        }
+        #cell_0_5 {
+            top: 0;
+            left: 500px;
+        }
+        #cell_1_0 {
+            top: 100px;
+            left: 0;
+        }
+        #cell_1_0 .r_wall {
+            background-color: #ffa100;
+        }
+        #cell_1_1 {
+            top: 100px;
+            left: 100px;
+        }
+        #cell_1_1 .b_wall {
+            background-color: #ffa100;
+        }
+
+        /* etc. */
+    </style>
+</head>
+<body>
+<div id="gameArea">
+    <!-- Next lines MUST be generated automatically! -->
+    <div class="cell_wrap" id="cell_0_0">
+        <div class="r_wall"></div>
+        <div class="b_wall"></div>
+        <div class="corner"></div>
+    </div>
+    <div class="cell_wrap" id="cell_0_1">
+        <div class="r_wall"></div>
+        <div class="b_wall"></div>
+        <div class="corner"></div>
+    </div>
+    <div class="cell_wrap" id="cell_0_2">
+        <div class="r_wall"></div>
+        <div class="b_wall"></div>
+        <div class="corner"></div>
+    </div>
+    <div class="cell_wrap" id="cell_0_3">
+        <div class="r_wall"></div>
+        <div class="b_wall"></div>
+        <div class="corner"></div>
+    </div>
+    <div class="cell_wrap" id="cell_0_4">
+        <div class="r_wall"></div>
+        <div class="b_wall"></div>
+        <div class="corner"></div>
+    </div>
+    <div class="cell_wrap" id="cell_0_5">
+        <div class="r_wall"></div>
+        <div class="b_wall"></div>
+        <div class="corner"></div>
+    </div>
+    <div class="cell_wrap" id="cell_1_0">
+        <div class="r_wall"></div>
+        <div class="b_wall"></div>
+        <div class="corner"></div>
+    </div>
+    <div class="cell_wrap" id="cell_1_1">
+        <div class="r_wall"></div>
+        <div class="b_wall"></div>
+        <div class="corner"></div>
+    </div>
+</div>
+</body>
+</html>
